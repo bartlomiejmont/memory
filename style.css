@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     background-color: rgb(189, 224, 224);
+    justify-content: space-around;
 }
 
 .card {
@@ -11,7 +12,7 @@
     /* margin: 5px; */
     font-size: 64px;
     text-align: center;
-    /* visibility: hidden */
+    visibility: hidden
 }
 
 .parentDiv{
