@@ -17,6 +17,12 @@ const winEmotes = [
 let clicked = [];
 let score = 0;
 
+const setScore = () => {
+    score += 2;
+    const scoreHeader = document.querySelector('h2');
+    scoreHeader.innerText = `Score: ${score}`;
+}
+
 const win = () => {
     Array.from(box.children).forEach((element, index) => {
         element.children[0].innerHTML= winEmotes[index];
@@ -41,7 +47,7 @@ const isWin = () => {
     const card2 = document.querySelector(`[data-id="${clicked[1].id}"]`)
 
     if (clicked[0].emote === clicked[1].emote) {
-        score += 2;
+        setScore();
         console.log(score);
         card1.parentElement.style.visibility = 'hidden';
         card2.parentElement.style.visibility = 'hidden';
@@ -78,3 +84,8 @@ for (let i = 0; i < emotes.length; i++) {
     parentDiv.appendChild(card);
     box.appendChild(parentDiv)
 }
+
+const body = document.querySelector('body');
+const scoreHeader = document.createElement('h2');
+body.appendChild(scoreHeader);
+scoreHeader.innerText = `Score: ${score}`;
