@@ -2,41 +2,65 @@
 // document.querySelectorAll('[data-foo="value"]');
 const box = document.querySelector('.container');
 const emotes = ['😀', '👾', '👿', '👽', '👻', '👮', '💜', '💣', '🦄',
-'😀', '👾', '👿', '👽', '👻', '👮', '💜', '💣', '🦄']
-.sort(() => .5 - Math.random())
+    '😀', '👾', '👿', '👽', '👻', '👮', '💜', '💣', '🦄']
+    .sort(() => .5 - Math.random())
+
+const winEmotes = [
+    '🍾', '🥂', '🍾',
+    '🍾', '🤴', '🍾',
+    '🍾', '🥂', '🍾',
+    '🎉', '🎉', '🎉',
+    '🎉', '💥', '🎉',
+    '🎉', '🎉', '🎉'
+].sort(() => .5 - Math.random())
 
 let clicked = [];
 let score = 0;
 
+const win = () => {
+    Array.from(box.children).forEach((element, index) => {
+        element.children[0].innerHTML= winEmotes[index];
+        element.style.visibility = 'visible';
+        element.children[0].style.visibility = 'visible';
+    });
+}
+
+const isGameOver = () => {
+    if(score >= emotes.length){
+        console.log("win");
+        win();
+    }
+}
+
 const isWin = () => {
-    if(clicked.length !== 2){
+    if (clicked.length !== 2) {
         return;
     }
 
     const card1 = document.querySelector(`[data-id="${clicked[0].id}"]`)
     const card2 = document.querySelector(`[data-id="${clicked[1].id}"]`)
 
-    if(clicked[0].emote === clicked[1].emote){
+    if (clicked[0].emote === clicked[1].emote) {
         score += 2;
         console.log(score);
         card1.parentElement.style.visibility = 'hidden';
         card2.parentElement.style.visibility = 'hidden';
-    } 
+    }
     setTimeout(() => {
         card1.style.visibility = 'hidden';
         card2.style.visibility = 'hidden';
         clicked = [];
-    },2000)
+        isGameOver();
+    }, 1000)
 }
 
 const clickBack = (e) => {
-    if(clicked.length >= 2){
+    if (clicked.length >= 2) {
         return;
     }
     const id = e.target.children[0].dataset.id;
     const emote = e.target.children[0].innerHTML;
-    clicked.push({id,emote});
-    console.log(clicked);
+    clicked.push({ id, emote });
     e.target.children[0].style.visibility = 'visible';
     isWin();
 }
